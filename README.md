@@ -17,6 +17,6 @@ $ quasar build
 $ quasar lint
 ```
 
-### Made with Vue.JS and quasar
-[Vue.JS](https://vuejs.org/)
-[Quasar Framework](http://quasar-framework.org/)
+### Made with Vue.JS and Quasar Framework
+- [Vue.JS](https://vuejs.org/)
+- [Quasar Framework](http://quasar-framework.org/)
