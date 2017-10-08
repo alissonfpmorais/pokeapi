@@ -10,4 +10,12 @@ function getPokemonAvatar (id) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
 }
 
-export { getPokemonList, getDetailedPokemonInfo, getPokemonAvatar }
+function getItemList () {
+  return `https://pokeapi.co/api/v2/item/?limit=50`
+}
+
+function getItemAvatar (name) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png`
+}
+
+export { getPokemonList, getDetailedPokemonInfo, getPokemonAvatar, getItemList, getItemAvatar }

@@ -1,106 +1,64 @@
-<template>
+<template lang="html">
   <q-layout>
-    <q-infinite-scroll :handler="loadMore" class="list">
-      <div class="gallery">
-        <div v-for="pokemon in pokemons" class="gallery-item">
-          <pokemon :number="pokemon.number" :avatar="pokemon.image" :name="pokemon.name" />
-        </div>
-      </div>
-      <q-spinner-dots slot="message" :size="40"></q-spinner-dots>
-    </q-infinite-scroll>
-    <q-fixed-position corner="bottom-right" :offset="[30, 30]">
-      <q-btn class="animate-pop" color="primary" round
-          v-back-to-top.animate="{offset: 1000, duration: 200}" >
-        <q-icon name="keyboard_arrow_up" />
-      </q-btn>
-    </q-fixed-position>
+    <div class="default-margin">
+      <!-- <tabs @select="value => label = value"/> -->
+      <search :label="label" @lookingFor="value => { typedName = value }" />
+      <list :searchFor="typedName" :load="cardsData" :cardType="label"/>
+      <!-- <list :searchFor="typedName" :load="cardsData" :cardType="label" @loadMore="value => "/> -->
+    </div>
   </q-layout>
 </template>
 
 <script>
-  import axios from 'axios'
-  import Pokemon from './Pokemon.vue'
-  import { getPokemonList, getPokemonAvatar } from '../js/endpoints/index'
-  import { QLayout, QInfiniteScroll, QSpinnerDots,
-    QFixedPosition, QBtn, QIcon, BackToTop } from 'quasar'
+  import { QLayout } from 'quasar'
+  import Tabs from './Tabs.vue'
+  import Search from './Search.vue'
+  import List from './List.vue'
+  import { getCards } from '../js/fetch/index'
 
   export default {
     components: {
       QLayout,
-      QInfiniteScroll,
-      QSpinnerDots,
-      QFixedPosition,
-      QBtn,
-      QIcon,
-      Pokemon
-    },
-    directives: {
-      BackToTop
+      Tabs,
+      Search,
+      List
     },
     data () {
       return {
-        pokemons: [],
-        nextUrl: null
+        label: 'items',
+        typedName: ''
       }
     },
-    created () {
-      this.getPokemons()
-    },
-    methods: {
-      async getPokemons (url, done) {
-        try {
-          let response
-
-          if (url) response = await axios(url)
-          else response = await axios(getPokemonList())
-
-          response.data.results.map(pokemon => {
-            let baseInfo = {}
-
-            let splittedURL = pokemon.url.split('/')
-            baseInfo.number = splittedURL[splittedURL.length - 2]
-            baseInfo.image = getPokemonAvatar(baseInfo.number)
-            baseInfo.name = pokemon.name
-
-            this.pokemons.splice(this.pokemons.length, 1, baseInfo)
-
-            if (done) done()
-          })
-
-          this.nextUrl = response.data.next
-        }
-        catch (err) {
-          console.log(err)
-        }
-      },
-      loadMore (index, done) {
-        if (this.pokemons.length > 0 && this.nextUrl) {
-          let url = this.nextUrl
-          this.nextUrl = null
-
-          this.getPokemons(url, done)
-        }
-        else {
-          done()
-        }
+    computed: {
+      // Get cards info
+      cardsData () {
+        console.log(this.label)
+        return getCards(this.label)
       }
     }
+    // methods: {
+    //   async loadMore (index, done) {
+    //     let list = this.$refs.list
+    //
+    //     if (this.cards.length === 0 || this.nextUrl) {
+    //       let result = await this.load(this.nextUrl)
+    //       this.nextUrl = result.nextUrl
+    //       this.cards = this.cards.concat(result.cards)
+    //
+    //       done()
+    //       list.loadMore()
+    //     }
+    //     else {
+    //       done()
+    //       list.stop()
+    //     }
+    //   }
+    // }
   }
 </script>
 
-<style scoped>
-  .list {
-    margin: 0.5em;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .gallery-item {
-    width: 10em;
+<style lang="css">
+  .default-margin {
+    margin: 1.5em;
   }
 </style>

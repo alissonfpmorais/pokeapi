@@ -1,5 +1,5 @@
 # PokeAPI
-A site to find your favorite pokemons, abilities and itens
+A site to find your favorite pokemons and items
 
 ### Build Setup
 
