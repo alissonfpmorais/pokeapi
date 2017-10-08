@@ -21,10 +21,8 @@ export default new VueRouter({
    * build publicPath back to '' so Cordova builds work again.
    */
 
-  mode: 'history',
   routes: [
     { path: '/', component: load('Main') },
-    { path: '/main', component: load('Main') },
 
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found
