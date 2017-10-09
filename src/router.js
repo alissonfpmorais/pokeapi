@@ -22,7 +22,9 @@ export default new VueRouter({
    */
 
   routes: [
-    { path: '/', component: load('Main') },
+    { path: '/', component: load('Pokemons') },
+    { path: '/pokemons', component: load('Pokemons') },
+    { path: '/items', component: load('Items') },
 
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found

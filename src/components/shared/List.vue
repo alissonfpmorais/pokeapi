@@ -3,7 +3,7 @@
     <q-infinite-scroll :handler="loadMore" class="column wrap items-center" ref="list">
       <div class="row wrap justify-center">
         <div v-if="true" v-for="card in filteredCards" class="gallery-item">
-          <card :avatar="card.image" :name="card.name" :number="card.number" :cardType="cardType"/>
+          <card :avatar="card.image" :name="card.name" :number="card.number" :cardType="label"/>
         </div>
       </div>
       <q-spinner-dots slot="message" :size="40"></q-spinner-dots>
@@ -21,6 +21,7 @@
   import { QLayout, QInfiniteScroll, QSpinnerDots,
     QFixedPosition, QBtn, QIcon, BackToTop } from 'quasar'
   import Card from './Card.vue'
+  import { getCards } from '../../js/fetch/index'
 
   export default {
     name: 'list',
@@ -37,12 +38,11 @@
       BackToTop
     },
     props: {
-      load: {
+      searchFor: { default: '' },
+      label: {
         required: true,
-        type: Function
-      },
-      searchFor: String,
-      cardType: String
+        type: String
+      }
     },
     data () {
       return {
@@ -66,7 +66,7 @@
         let list = this.$refs.list
 
         if (this.cards.length === 0 || this.nextUrl) {
-          let result = await this.load(this.nextUrl)
+          let result = await getCards(this.nextUrl, this.label)
           this.nextUrl = result.nextUrl
           this.cards = this.cards.concat(result.cards)
 
@@ -78,14 +78,6 @@
           list.stop()
         }
       }
-      // loadMore (index, done) {
-      //   let list = {
-      //     done: done,
-      //     it: this.$refs.list
-      //   }
-      //
-      //   this.$emit('loadMore', list)
-      // }
     }
   }
 </script>

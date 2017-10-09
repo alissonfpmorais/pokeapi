@@ -6,20 +6,18 @@ import {
   getItemAvatar
 } from '../endpoints/index'
 
-function getCards (type) {
-  return async function (url) {
-    let result = { nextUrl: '', cards: [] }
+async function getCards (url, type) {
+  let result = { nextUrl: '', cards: [] }
 
-    try {
-      if (type === 'items') result = getItems(url)
-      else result = getPokemons(url)
-    }
-    catch (err) {
-      console.log(err)
-    }
-
-    return result
+  try {
+    if (type === 'items') result = getItems(url)
+    else result = getPokemons(url)
   }
+  catch (err) {
+    console.log(err)
+  }
+
+  return result
 }
 
 async function getPokemons (url) {

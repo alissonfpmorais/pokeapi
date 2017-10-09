@@ -1,15 +1,30 @@
-<template>
-  <!-- Don't drop "q-app" class -->
+<template lang="html">
   <div id="q-app">
-    <router-view />
+    <q-layout>
+      <div class="default-margin">
+        <tabs />
+        <router-view />
+      </div>
+    </q-layout>
   </div>
 </template>
 
 <script>
-/*
- * Root component
- */
-export default {}
+  import { QLayout } from 'quasar'
+  import Tabs from './components/Tabs.vue'
+  import Search from './components/Search.vue'
+
+  export default {
+    components: {
+      QLayout,
+      Tabs,
+      Search
+    }
+  }
 </script>
 
-<style></style>
+<style lang="css">
+  .default-margin {
+    margin: 1.5em;
+  }
+</style>
