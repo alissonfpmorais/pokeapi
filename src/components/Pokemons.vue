@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <search :label="cardType" @lookingFor="value => typedName = value" />
-    <list :searchFor="typedName" :label="cardType" />
+    <list :searchFor="typedName" :label="cardType" @openDetails=""/>
   </div>
 </template>
 
@@ -17,7 +17,8 @@
     data () {
       return {
         cardType: 'pokemons',
-        typedName: ''
+        typedName: '',
+        pokemonId: ''
       }
     }
   }

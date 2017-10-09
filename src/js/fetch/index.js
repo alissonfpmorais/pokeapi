@@ -1,10 +1,57 @@
 import axios from 'axios'
 import {
   getPokemonList,
+  getDetailedPokemonInfo,
   getPokemonAvatar,
   getItemList,
   getItemAvatar
 } from '../endpoints/index'
+
+async function getDetails (id) {
+  let result = {
+    abilities: [],
+    stats: [],
+    weight: '',
+    moves: [],
+    height: '',
+    types: []
+  }
+
+  if (id) {
+    try {
+      let apiResponse = await axios(getDetailedPokemonInfo(id))
+
+      apiResponse.data.abilities.map(ability => {
+        result.abilities.push(ability.ability.name)
+      })
+
+      apiResponse.data.stats.map(stat => {
+        let info = {}
+
+        info.name = stat.stat.name
+        info.value = stat.base_stat
+        result.stats.push(info)
+      })
+
+      result.weight = apiResponse.data.weight
+
+      apiResponse.data.moves.map(move => {
+        result.moves.push(move.move.name)
+      })
+
+      result.height = apiResponse.data.height
+
+      apiResponse.data.types.map(type => {
+        result.types.push(type.type.name)
+      })
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  return result
+}
 
 async function getCards (url, type) {
   let result = { nextUrl: '', cards: [] }
@@ -71,4 +118,4 @@ function getItemImage (name) {
   return getItemAvatar(name)
 }
 
-export { getCards }
+export { getCards, getDetails }

@@ -3,7 +3,7 @@ function getPokemonList () {
 }
 
 function getDetailedPokemonInfo (id) {
-  return `https://pokeapi.co/api/v2/pokemon/${id}`
+  return `https://pokeapi.co/api/v2/pokemon/${id}/`
 }
 
 function getPokemonAvatar (id) {

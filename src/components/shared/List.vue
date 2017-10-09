@@ -3,7 +3,8 @@
     <q-infinite-scroll :handler="loadMore" class="column wrap items-center" ref="list">
       <div class="row wrap justify-center">
         <div v-if="true" v-for="card in filteredCards" class="gallery-item">
-          <card :avatar="card.image" :name="card.name" :number="card.number" :cardType="label"/>
+          <card :avatar="card.image" :name="card.name"
+            :number="card.number" :cardType="label" @openDetails="openDetails(card.number)"/>
         </div>
       </div>
       <q-spinner-dots slot="message" :size="40"></q-spinner-dots>
@@ -77,7 +78,8 @@
           done()
           list.stop()
         }
-      }
+      },
+      openDetails (number) { this.$emit('openDetails', number) }
     }
   }
 </script>
