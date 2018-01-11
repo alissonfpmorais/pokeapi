@@ -1,6 +1,10 @@
 # PokeAPI
 A site to find your favorite pokemons and items
 
+### Live
+
+If you wanna the working project, just follow the link: [PokeAPI](https://alissonfpmorais.github.io/pokeapi/#/)
+
 ### Build Setup
 
 ``` bash
